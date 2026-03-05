@@ -1,5 +1,43 @@
 # 🍕 OOP & SOLID Practice -- Pizza Ordering System
 
+Requirement – OOP + SOLID Practice
+Make a Pizza
+
+Name
+
+Dough
+
+Sauce
+
+Toppings
+
+Mushrooms
+
+Onions
+
+Bacon
+
+Pizza types
+
+Cheese
+
+Greek
+
+Pepperoni
+
+Processes
+
+Select type
+
+Prepare
+
+Bake
+
+Box
+
+Đây là 1 project cá nhân chỉ làm ra log console để tập luyện OOP và SOLID, không có UI hay database. Mục đích là để thực hành tư duy thiết kế phần mềm chuyên nghiệp, không phải để xây dựng 1 hệ thống đặt pizza hoàn chỉnh.
+
+
 ## 1. Overview
 
 This project is a **training exercise for Object-Oriented Programming

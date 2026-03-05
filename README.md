@@ -1,351 +1,146 @@
-# 🍕 OOP & SOLID Practice -- Pizza Ordering System
+# Hệ thống đặt Pizza - Pizza Ordering System
 
-Requirement – OOP + SOLID Practice
-Make a Pizza
+> [!NOTE]
+> Đây là một dự án cá nhân tập luyện **Lập trình hướng đối tượng** (**OOP**) và các **nguyên lý SOLID** (**SOLID principles**). Hệ thống tập trung vào việc ghi log ra console để thực hành tư duy thiết kế phần mềm chuyên nghiệp.
 
-Name
+## 1. Tổng quan - Overview
 
-Dough
+Dự án này là một bài tập thực hành xây dựng **Hệ thống đặt Pizza** (**Pizza Ordering System**). Mục tiêu không chỉ là tạo ra một chương trình hoạt động được, mà là rèn luyện quy trình tư duy của một kỹ sư phần mềm chuyên nghiệp:
 
-Sauce
+**Vấn đề** (**Problem**) → **Phân tích** (**Analysis**) → **Thiết kế** (**Design**) → **Kiến trúc** (**Architecture**) → **Triển khai** (**Implementation**)
 
-Toppings
+Thay vì viết mã ngay lập tức, chúng ta tập trung vào:
+- Hiểu rõ vấn đề.
+- Mô hình hóa **miền nghiệp vụ** (**domain**).
+- Áp dụng các **nguyên lý SOLID** (**SOLID principles**).
+- Thiết kế **kiến trúc có khả năng mở rộng** (**extensible architecture**).
 
-Mushrooms
+---
 
-Onions
+## 2. Mục tiêu học tập - Learning Objectives
 
-Bacon
+Dự án giúp lập trình viên thực hành:
 
-Pizza types
+### 2.1 Các khái niệm OOP - OOP Concepts
+- **Tính đóng gói** (**Encapsulation**)
+- **Tính trừu tượng** (**Abstraction**)
+- **Tính kế thừa** (**Inheritance**)
+- **Tính đa hình** (**Polymorphism**)
 
-Cheese
+### 2.2 Các nguyên lý SOLID - SOLID Principles
+- **S - Nguyên lý đơn trách nhiệm** (**Single Responsibility Principle**)
+- **O - Nguyên lý Đóng/Mở** (**Open/Closed Principle**)
+- **L - Nguyên lý thay thế Liskov** (**Liskov Substitution Principle**)
+- **I - Nguyên lý phân tách giao diện** (**Interface Segregation Principle**)
+- **D - Nguyên lý đảo ngược phụ thuộc** (**Dependency Inversion Principle**)
 
-Greek
+---
 
-Pepperoni
+## 3. Mô tả bài toán - Problem Statement
 
-Processes
+Chúng ta xây dựng một hệ thống với các yêu cầu sau:
 
-Select type
+### 3.1 Thuộc tính của Pizza - Pizza Properties
+Một chiếc Pizza bao gồm:
+- **Tên** (**Name**)
+- **Bột bánh** (**Dough**)
+- **Sốt** (**Sauce**)
+- **Phần nhân thêm** (**Toppings**): Ví dụ: **Nấm** (**Mushrooms**), **Hành tây** (**Onions**), **Thịt xông khói** (**Bacon**).
 
-Prepare
+### 3.2 Các loại Pizza - Pizza Types
+Hệ thống hỗ trợ các loại Pizza khác nhau:
+- **Pizza phô mai** (**Cheese Pizza**)
+- **Pizza Hy Lạp** (**Greek Pizza**)
+- **Pizza xúc xích Ý** (**Pepperoni Pizza**)
 
-Bake
+### 3.3 Quy trình chuẩn bị - Preparation Process
+Mọi chiếc Pizza đều trải qua các bước:
+1. **Chọn loại Pizza** (**Select pizza type**)
+2. **Chuẩn bị nguyên liệu** (**Prepare ingredients**)
+3. **Nướng bánh** (**Bake pizza**)
+4. **Đóng hộp** (**Box pizza**)
 
-Box
+---
 
-Đây là 1 project cá nhân chỉ làm ra log console để tập luyện OOP và SOLID, không có UI hay database. Mục đích là để thực hành tư duy thiết kế phần mềm chuyên nghiệp, không phải để xây dựng 1 hệ thống đặt pizza hoàn chỉnh.
+## 4. Mô hình hóa miền nghiệp vụ - Domain Modeling
 
+### 4.1 Thực thể cốt lõi - Core Entity: `Pizza`
+- **Thuộc tính** (**Attributes**): `name`, `dough`, `sauce`, `toppings`.
+- **Phương thức** (**Methods**): `prepare()`, `bake()`, `box()`.
 
-## 1. Overview
+### 4.2 Các biến thể - Pizza Variants
+- `Pizza` (Abstract Class)
+  - `CheesePizza`
+  - `GreekPizza`
+  - `PepperoniPizza`
 
-This project is a **training exercise for Object-Oriented Programming
-(OOP) and SOLID principles** using a simple **Pizza Ordering System**.
+---
 
-The goal is **not only to build a working program**, but to **practice
-the thinking process of a professional software engineer**:
+## 5. Phương pháp thiết kế - Design Approach
 
-Problem → Analysis → Design → Architecture → Implementation
+Chúng ta tuân theo quy trình kỹ thuật từng bước:
 
-Instead of coding immediately, we focus on:
+### 5.1 Bước 1: Phân tích vấn đề - Problem Analysis
+Xác định:
+- **Thực thể** (**Entities**): `Pizza`, `Dough`, `Sauce`, `Topping`.
+- **Quy trình** (**Processes**): `prepare`, `bake`, `box`.
+- **Biến thể** (**Variations**): Các loại Pizza.
 
--   Understanding the problem
--   Modeling the domain
--   Applying SOLID principles
--   Designing extensible architecture
+### 5.2 Bước 2: Xác định các điểm thay đổi - Identify Change Points
+Những gì có thể thay đổi trong tương lai?
+- Các loại Pizza mới.
+- Các loại phần nhân thêm khác nhau.
+- Các phong cách chuẩn bị khác nhau.
 
-------------------------------------------------------------------------
+> [!IMPORTANT]
+> Những điểm thay đổi này sẽ định hướng cho kiến trúc của chúng ta.
 
-# 2. Learning Objectives
+### 5.3 Bước 3: Áp dụng SOLID - Apply SOLID
+- **SRP**: `Pizza` quản lý hành vi bánh, `PizzaFactory` quản lý việc khởi tạo, `OrderService` quản lý luồng đặt hàng.
+- **OCP**: Thêm loại Pizza mới (ví dụ: `VeggiePizza`) mà không cần sửa đổi mã nguồn hiện có.
+- **DIP**: `OrderService` phụ thuộc vào trừu tượng (`PizzaFactory`), không phụ thuộc vào các lớp triển khai cụ thể.
 
-This project helps developers practice:
+---
 
-## OOP Concepts
+## 6. Kiến trúc dự án - Project Architecture
 
--   Encapsulation
--   Abstraction
--   Inheritance
--   Polymorphism
+```text
+pizza-oop-solid
+├── README.md
+├── model
+│   ├── Pizza.java
+│   ├── CheesePizza.java
+│   ├── GreekPizza.java
+│   └── PepperoniPizza.java
+├── factory
+│   └── PizzaFactory.java
+├── service
+│   └── PizzaOrderService.java
+└── Main.java
+```
 
-## SOLID Principles
+---
 
-  Principle   Description
-  ----------- ---------------------------------
-  S           Single Responsibility Principle
-  O           Open Closed Principle
-  L           Liskov Substitution Principle
-  I           Interface Segregation Principle
-  D           Dependency Inversion Principle
+## 7. Lộ trình triển khai - Implementation Roadmap
 
-------------------------------------------------------------------------
+- **Cấp độ 1: Mô hình Pizza cơ bản** (**Basic Pizza Model**): Tạo lớp `Pizza` và `CheesePizza`.
+- **Cấp độ 2: Thêm các loại Pizza mới** (**Add More Pizza Types**): Thêm `GreekPizza` và `PepperoniPizza`.
+- **Cấp độ 3: Giới thiệu Factory Pattern** (**Introduce Factory Pattern**): Thay thế các câu lệnh `if-else` bằng `PizzaFactory`.
+- **Cấp độ 4: Cải thiện tính mở rộng** (**Improve Extensibility**): Hỗ trợ thêm nhân và phong cách chuẩn bị.
+- **Cấp độ 5: Thêm kiểm thử** (**Add Tests**): Viết Unit Tests cho các loại bánh.
 
-# 3. Problem Statement
+---
 
-We want to build a **Pizza Ordering System** with the following
-requirements.
+## 8. Công nghệ sử dụng - Technologies
 
-## Pizza Properties
+- **Ngôn ngữ** (**Language**): Java 21+
+- **Kiểm thử** (**Testing**): JUnit 5
+- **Công cụ xây dựng** (**Build Tool**): Maven / Gradle
 
-A pizza contains:
+---
 
--   Name
--   Dough
--   Sauce
--   Toppings
+## 9. Tác giả - Author
 
-Example toppings:
+Dự án này được tạo ra để phục vụ mục đích **học tập các nguyên lý thiết kế OOP và SOLID**.
 
--   Mushrooms
--   Onions
--   Bacon
-
-------------------------------------------------------------------------
-
-## Pizza Types
-
-The system should support different types of pizzas:
-
--   Cheese Pizza
--   Greek Pizza
--   Pepperoni Pizza
-
-Each pizza may have **different toppings and ingredients**.
-
-------------------------------------------------------------------------
-
-## Pizza Preparation Process
-
-Every pizza goes through the following steps:
-
-1.  Select pizza type
-2.  Prepare ingredients
-3.  Bake pizza
-4.  Box pizza
-
-------------------------------------------------------------------------
-
-# 4. Domain Modeling
-
-## Core Entity
-
-Pizza
-
-Attributes:
-
--   name
--   dough
--   sauce
--   toppings
-
-Methods:
-
--   prepare()
--   bake()
--   box()
-
-------------------------------------------------------------------------
-
-## Pizza Variants
-
-Pizza ├── CheesePizza ├── GreekPizza └── PepperoniPizza
-
-------------------------------------------------------------------------
-
-# 5. Design Approach
-
-We follow a **step-by-step engineering workflow**.
-
-## Step 1 --- Problem Analysis
-
-Identify:
-
-Entities
-
--   Pizza
--   Dough
--   Sauce
--   Topping
-
-Processes
-
--   prepare
--   bake
--   box
-
-Variations
-
--   Pizza types
-
-------------------------------------------------------------------------
-
-## Step 2 --- Identify Change Points
-
-What may change in the future?
-
--   New pizza types
--   Different toppings
--   Different preparation styles
-
-These change points guide our architecture.
-
-------------------------------------------------------------------------
-
-## Step 3 --- Apply SOLID
-
-### SRP -- Single Responsibility
-
-Each class should have **one responsibility only**.
-
-Example:
-
-Pizza → pizza behavior\
-PizzaFactory → pizza creation\
-OrderService → order flow
-
-------------------------------------------------------------------------
-
-### OCP -- Open Closed Principle
-
-We should be able to **add new pizza types without modifying existing
-code**.
-
-Example:
-
-Add class: VeggiePizza
-
-WITHOUT modifying existing pizza classes
-
-------------------------------------------------------------------------
-
-### DIP -- Dependency Inversion
-
-High level modules should not depend on low level modules.
-
-Instead depend on abstractions.
-
-Example:
-
-OrderService\
-↓\
-PizzaFactory (interface)
-
-------------------------------------------------------------------------
-
-# 6. Project Architecture
-
-Example architecture:
-
-pizza-oop-solid │ ├── README.md │ ├── model │ ├── Pizza.java │ ├──
-CheesePizza.java │ ├── GreekPizza.java │ └── PepperoniPizza.java │ ├──
-factory │ └── PizzaFactory.java │ ├── service │ └──
-PizzaOrderService.java │ └── Main.java
-
-------------------------------------------------------------------------
-
-# 7. Implementation Roadmap
-
-We implement the system in **multiple levels**.
-
-## Level 1 --- Basic Pizza Model
-
-Create:
-
--   Pizza
--   CheesePizza
-
-Run preparation process.
-
-------------------------------------------------------------------------
-
-## Level 2 --- Add More Pizza Types
-
-Add:
-
--   GreekPizza
--   PepperoniPizza
-
-------------------------------------------------------------------------
-
-## Level 3 --- Introduce Factory Pattern
-
-Avoid using:
-
-if(type == CHEESE)\
-if(type == GREEK)\
-if(type == PEPPERONI)
-
-Instead implement:
-
-PizzaFactory
-
-------------------------------------------------------------------------
-
-## Level 4 --- Improve Extensibility
-
-Support:
-
--   More toppings
--   New pizza types
--   New preparation styles
-
-------------------------------------------------------------------------
-
-## Level 5 --- Add Tests
-
-Test cases:
-
--   createCheesePizza()
--   createGreekPizza()
--   createPepperoniPizza()
-
-------------------------------------------------------------------------
-
-# 8. Example Workflow
-
-Customer selects pizza type
-
-→ PizzaFactory creates pizza
-
-→ prepare()
-
-→ bake()
-
-→ box()
-
-→ return pizza
-
-------------------------------------------------------------------------
-
-# 9. Future Improvements
-
-Possible extensions:
-
--   Pizza size (Small / Medium / Large)
--   Pricing system
--   Online ordering
--   Multiple pizza stores
--   Abstract Factory Pattern
-
-------------------------------------------------------------------------
-
-# 10. Technologies
-
-Example stack:
-
--   Java 21+
--   JUnit 5
--   Maven / Gradle
-
-------------------------------------------------------------------------
-
-# 11. Author
-
-This project is created for **learning OOP and SOLID design
-principles**.
-
-It is intended for:
-
--   Junior Developers
--   Backend Trainees
--   Students learning Software Architecture
+_Người thực hiện: CongHungDev_

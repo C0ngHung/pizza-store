@@ -1,5 +1,6 @@
 package com.vn.pizzastore;
 
+import com.vn.pizzastore.domain.PizzaStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,9 +1,9 @@
 package com.vn.pizzastore;
 
-import com.vn.pizzastore.domain.pizza.CheesePizza;
-import com.vn.pizzastore.domain.pizza.GreekPizza;
-import com.vn.pizzastore.domain.pizza.PepperoniPizza;
+import com.vn.pizzastore.domain.factory.DefaultPizzaFactory;
+import com.vn.pizzastore.domain.factory.PizzaFactory;
 import com.vn.pizzastore.domain.pizza.Pizza;
+import com.vn.pizzastore.domain.pizza.PizzaType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,13 +13,15 @@ public class PizzaStoreApplication {
     public static void main(String[] args) {
         SpringApplication.run(PizzaStoreApplication.class, args);
 
-        runPizzaFlow(new CheesePizza());
+        PizzaFactory pizzaFactory = new DefaultPizzaFactory();
+
+        runPizzaFlow(pizzaFactory.createPizza(PizzaType.CHEESE));
         System.out.println("----------------------------------");
 
-        runPizzaFlow(new GreekPizza());
+        runPizzaFlow(pizzaFactory.createPizza(PizzaType.GREEK));
         System.out.println("----------------------------------");
 
-        runPizzaFlow(new PepperoniPizza());
+        runPizzaFlow(pizzaFactory.createPizza(PizzaType.PEPPERONI));
     }
 
     private static void runPizzaFlow(Pizza pizza) {

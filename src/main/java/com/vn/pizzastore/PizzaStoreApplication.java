@@ -8,6 +8,9 @@ public class PizzaStoreApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PizzaStoreApplication.class, args);
+
+        var pizzaStore = new PizzaStore();
+        pizzaStore.OrderPizza();
     }
 
 }

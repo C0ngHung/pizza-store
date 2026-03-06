@@ -1,4 +1,4 @@
-package com.vn.pizzastore.domain.factory;
+package com.vn.pizzastore.factory;
 
 import com.vn.pizzastore.domain.pizza.Pizza;
 import com.vn.pizzastore.domain.pizza.PizzaType;

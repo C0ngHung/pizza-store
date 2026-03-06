@@ -169,6 +169,92 @@ Khi bạn gọi `orderPizza(PizzaType.CHEESE)` trong `NYPizzaStore`:
 
 ---
 
+## 8. Orchestration Logic (Logic điều phối)
+
+> 💡 **Định nghĩa đơn giản**: Orchestration Logic là đoạn code **chỉ làm nhiệm vụ ra lệnh cho các bước khác thực hiện theo đúng thứ tự**, giống như một nhạc trưởng (Conductor) chỉ huy dàn nhạc.
+
+### Orchestration Logic là gì?
+
+Một lớp "Orchestrator" không tự thực hiện công việc cụ thể — nó **điều phối** (orchestrate) các thành phần khác làm việc theo đúng thứ tự và quy trình.
+
+**Ví dụ thực tế**: Khi bạn đặt hàng online, hệ thống sẽ:
+1. Kiểm tra tồn kho (gọi `InventoryService`)
+2. Thanh toán (gọi `PaymentService`)
+3. Giao hàng (gọi `ShippingService`)
+4. Gửi email xác nhận (gọi `NotificationService`)
+
+Đoạn code điều phối 4 bước trên **chính là Orchestration Logic**. Nó không tự kiểm tra tồn kho, không tự thanh toán — nó chỉ biết "bước nào gọi ai, gọi theo thứ tự nào".
+
+### Trong dự án Pizza Store:
+
+`OrderPizzaUseCase` chính là Orchestrator:
+```java
+public Pizza execute(PizzaType type) {
+    Pizza pizza = pizzaFactory.createPizza(type); // Bước 1: Giao cho Factory tạo bánh
+
+    pizza.prepare(); // Bước 2: Bánh tự chuẩn bị
+    pizza.bake();    // Bước 3: Bánh tự nướng
+    pizza.cut();     // Bước 4: Bánh tự cắt
+    pizza.box();     // Bước 5: Bánh tự đóng hộp
+
+    return pizza;    // Bước 6: Trả kết quả
+}
+```
+`OrderPizzaUseCase` không **biết làm bánh** — nó chỉ **biết ra lệnh** cho các bước theo đúng thứ tự.
+
+### Các đặc điểm của Orchestrator tốt:
+
+| Đặc điểm | Giải thích |
+| :--- | :--- |
+| **Không tự làm** | Ủy thác công việc cho các lớp chuyên biệt |
+| **Biết thứ tự** | Quyết định bước nào đến trước, bước nào đến sau |
+| **Dễ đọc** | Code như một "kế hoạch" ngắn gọn, không có logic phức tạp |
+| **Dễ thay đổi** | Muốn đổi thứ tự? Chỉ cần sửa ở một chỗ duy nhất |
+
+### Đối lập với: Business Logic (Logic nghiệp vụ)
+
+| | Orchestration Logic | Business Logic |
+| :--- | :--- | :--- |
+| **Làm gì?** | Ra lệnh và điều phối | Thực hiện tính toán, xử lý cụ thể |
+| **Ví dụ** | `execute()` trong UseCase | `createPizza()` trong Factory |
+| **Ở đâu?** | UseCase / Service | Domain Model / Helper |
+
+---
+
+## 9. Domain Model vs Application Logic (Mô hình nghiệp vụ vs Logic ứng dụng)
+
+> 💡 **Đây là nguyên tắc giúp bạn quyết định "class này thuộc package nào".**
+
+### Domain Model là gì?
+- Là những thứ thuộc về **"thế giới thực"** của bài toán.
+- Trả lời câu hỏi: **"Bài toán kinh doanh này nói về cái gì?"**
+- **Ví dụ**: Pizza là gì, có công thức gì, có những loại nào.
+
+### Application Logic là gì?
+- Là những thứ thuộc về **"cách ứng dụng hoạt động"** — kỹ thuật triển khai.
+- Trả lời câu hỏi: **"Hệ thống xử lý bài toán này như thế nào?"**
+- **Ví dụ**: Ai tạo Pizza (Factory), quy trình đặt hàng (UseCase).
+
+### Phân loại trong dự án Pizza Store:
+
+| Class / Package | Thuộc loại | Lý do | Nên đặt ở đâu? |
+| :--- | :--- | :--- | :--- |
+| `Pizza`, `CheesePizza`... | **Domain Model** | Mô tả thực thể "Pizza" trong thế giới thực | `domain.pizza/` |
+| `PizzaType` | **Domain Model** | Phân loại Pizza — thuộc về nghiệp vụ | `domain.pizza/` |
+| `PizzaFactory` | **Application Logic** | "Ai tạo Pizza" — kỹ thuật triển khai, không phải nghiệp vụ | `factory/` |
+| `OrderPizzaUseCase` | **Application Logic** | "Quy trình đặt hàng" — lớp điều phối ứng dụng | `usecase/` |
+
+### Quy tắc phân biệt nhanh:
+
+| Câu hỏi | Nếu trả lời "Có" → | Package |
+| :--- | :--- | :--- |
+| Nếu không có phần mềm, thứ này có tồn tại không? (Pizza, công thức...) | **Domain Model** | `domain/` |
+| Thứ này chỉ tồn tại vì ứng dụng cần nó? (Factory, UseCase...) | **Application Logic** | `factory/`, `usecase/` |
+
+> 🔑 **Liên hệ với Clean Architecture**: Đây chính là sự phân tách giữa **Entity Layer** (domain) và **Use Case Layer** (application logic) trong kiến trúc của Robert C. Martin.
+
+---
+
 ## English Technical Terms
 
 - **Decoupling**: Giảm sự phụ thuộc giữa các thành phần.
@@ -178,3 +264,6 @@ Khi bạn gọi `orderPizza(PizzaType.CHEESE)` trong `NYPizzaStore`:
 - **Shared Behavior**: Hành vi chung giữa các lớp con → đặt ở lớp cha (concrete method).
 - **Variable Behavior**: Hành vi thay đổi giữa các lớp con → khai báo `abstract` ở lớp cha.
 - **Demonstrate**: Minh họa, mô phỏng cách hoạt động thực tế.
+- **Orchestration Logic**: Logic điều phối thứ tự các bước, không tự thực hiện công việc cụ thể.
+- **Domain Model**: Mô hình nghiệp vụ — những thứ thuộc về "thế giới thực" của bài toán.
+- **Application Logic**: Logic ứng dụng — kỹ thuật triển khai, chỉ tồn tại trong phần mềm.

@@ -32,7 +32,8 @@ Quy trình (**Process**) xử lý một đơn hàng Pizza:
 1. **Chọn loại Pizza** (**Select Pizza Type**)
 2. **Chuẩn bị bánh** (**Prepare the Pizza**)
 3. **Nướng bánh** (**Bake the Pizza**)
-4. **Đóng hộp** (**Box the Pizza**)
+4. **Cắt bánh** (**Cut the Pizza**)
+5. **Đóng hộp** (**Box the Pizza**)
 
 ## 3. Phân tích thiết kế hệ thống - System Design Analysis
 

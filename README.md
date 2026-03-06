@@ -10,6 +10,7 @@ Dự án này là một bài tập thực hành xây dựng **Hệ thống đặ
 **Vấn đề** (**Problem**) → **Phân tích** (**Analysis**) → **Thiết kế** (**Design**) → **Kiến trúc** (**Architecture**) → **Triển khai** (**Implementation**)
 
 Thay vì viết mã ngay lập tức, chúng ta tập trung vào:
+
 - Hiểu rõ vấn đề.
 - Mô hình hóa **miền nghiệp vụ** (**domain**).
 - Áp dụng các **nguyên lý SOLID** (**SOLID principles**).
@@ -22,12 +23,14 @@ Thay vì viết mã ngay lập tức, chúng ta tập trung vào:
 Dự án giúp lập trình viên thực hành:
 
 ### 2.1 Các khái niệm OOP - OOP Concepts
+
 - **Tính đóng gói** (**Encapsulation**)
 - **Tính trừu tượng** (**Abstraction**)
 - **Tính kế thừa** (**Inheritance**)
 - **Tính đa hình** (**Polymorphism**)
 
 ### 2.2 Các nguyên lý SOLID - SOLID Principles
+
 - **S - Nguyên lý đơn trách nhiệm** (**Single Responsibility Principle**)
 - **O - Nguyên lý Đóng/Mở** (**Open/Closed Principle**)
 - **L - Nguyên lý thay thế Liskov** (**Liskov Substitution Principle**)
@@ -41,34 +44,43 @@ Dự án giúp lập trình viên thực hành:
 Chúng ta xây dựng một hệ thống với các yêu cầu sau:
 
 ### 3.1 Thuộc tính của Pizza - Pizza Properties
+
 Một chiếc Pizza bao gồm:
+
 - **Tên** (**Name**)
 - **Bột bánh** (**Dough**)
 - **Sốt** (**Sauce**)
 - **Phần nhân thêm** (**Toppings**): Ví dụ: **Nấm** (**Mushrooms**), **Hành tây** (**Onions**), **Thịt xông khói** (**Bacon**).
 
 ### 3.2 Các loại Pizza - Pizza Types
+
 Hệ thống hỗ trợ các loại Pizza khác nhau:
+
 - **Pizza phô mai** (**Cheese Pizza**)
 - **Pizza Hy Lạp** (**Greek Pizza**)
 - **Pizza xúc xích Ý** (**Pepperoni Pizza**)
 
 ### 3.3 Quy trình chuẩn bị - Preparation Process
+
 Mọi chiếc Pizza đều trải qua các bước:
-1. **Chọn loại Pizza** (**Select pizza type**)
-2. **Chuẩn bị nguyên liệu** (**Prepare ingredients**)
-3. **Nướng bánh** (**Bake pizza**)
-4. **Đóng hộp** (**Box pizza**)
+
+1. **Chọn loại Pizza** (**Select Pizza Type**)
+2. **Chuẩn bị bánh** (**Prepare the Pizza**)
+3. **Nướng bánh** (**Bake the Pizza**)
+4. **Cắt bánh** (**Cut the Pizza**)
+5. **Đóng hộp** (**Box the Pizza**)
 
 ---
 
 ## 4. Mô hình hóa miền nghiệp vụ - Domain Modeling
 
 ### 4.1 Thực thể cốt lõi - Core Entity: `Pizza`
+
 - **Thuộc tính** (**Attributes**): `name`, `dough`, `sauce`, `toppings`.
-- **Phương thức** (**Methods**): `prepare()`, `bake()`, `box()`.
+- **Phương thức** (**Methods**): `prepare()`, `bake()`, `cut()`, `box()`.
 
 ### 4.2 Các biến thể - Pizza Variants
+
 - `Pizza` (Abstract Class)
   - `CheesePizza`
   - `GreekPizza`
@@ -81,13 +93,17 @@ Mọi chiếc Pizza đều trải qua các bước:
 Chúng ta tuân theo quy trình kỹ thuật từng bước:
 
 ### 5.1 Bước 1: Phân tích vấn đề - Problem Analysis
+
 Xác định:
+
 - **Thực thể** (**Entities**): `Pizza`, `Dough`, `Sauce`, `Topping`.
-- **Quy trình** (**Processes**): `prepare`, `bake`, `box`.
+- **Quy trình** (**Processes**): `prepare`, `bake`, `cut`, `box`.
 - **Biến thể** (**Variations**): Các loại Pizza.
 
 ### 5.2 Bước 2: Xác định các điểm thay đổi - Identify Change Points
+
 Những gì có thể thay đổi trong tương lai?
+
 - Các loại Pizza mới.
 - Các loại phần nhân thêm khác nhau.
 - Các phong cách chuẩn bị khác nhau.
@@ -96,6 +112,7 @@ Những gì có thể thay đổi trong tương lai?
 > Những điểm thay đổi này sẽ định hướng cho kiến trúc của chúng ta.
 
 ### 5.3 Bước 3: Áp dụng SOLID - Apply SOLID
+
 - **SRP**: `Pizza` quản lý hành vi bánh, `PizzaFactory` quản lý việc khởi tạo, `OrderService` quản lý luồng đặt hàng.
 - **OCP**: Thêm loại Pizza mới (ví dụ: `VeggiePizza`) mà không cần sửa đổi mã nguồn hiện có.
 - **DIP**: `OrderService` phụ thuộc vào trừu tượng (`PizzaFactory`), không phụ thuộc vào các lớp triển khai cụ thể.
